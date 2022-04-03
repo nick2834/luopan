@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import "./Shfx.less";
+import { Spin } from 'antd'
 import { Line } from '@ant-design/charts';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { data2 } from "../components/config"
@@ -17,7 +18,8 @@ export class Shfx extends Component {
             { title: "自然周", date: 7 },
             { title: "自然月", date: 30 },
         ],
-        tabIndex: 3
+        tabIndex: 3,
+        loading: true
     }
     handleClick = (tabIndex) => {
         const { tabList } = this.state;
@@ -30,11 +32,15 @@ export class Shfx extends Component {
         })
     }
     componentDidMount = () => {
+        document.title = "售后分析-抖音电商罗盘";
         let startDate = moment().day(moment().day() - 90).format("YYYY/MM/DD");
         let endDate = moment().format("YYYY/MM/DD")
         this.setState({
             dateSection: `${startDate} - ${endDate}`
         })
+        setTimeout(() => {
+            this.setState({ loading: false })
+        }, 1500);
     }
     render() {
         const { tabList, tabIndex, dateSection } = this.state;
@@ -65,191 +71,193 @@ export class Shfx extends Component {
         }
         return (
             <div className='containerWrapper--b6jo7'>
-                <div className='contentWrapper--1aeQx'>
-                    <div className='wrapper--3K0rj'>
-                        <div className="title--2ZSyt" style={{ fontSize: "16px", lineHeight: "22px" }}>售后分析</div>
-                        <div className="children--1L3A0">
-                            <a href=" https://school.jinritemai.com/doudian/web/article/113351" target="_blank" rel="noopener noreferrer">帮助中心</a>
-                        </div>
-                    </div>
-                    <div>
+                <Spin spinning={this.state.loading} tip='加载中...'>
+                    <div className='contentWrapper--1aeQx'>
                         <div className='wrapper--3K0rj'>
-                            <div className="title--2ZSyt" style={{ fontSize: "14px", lineHeight: "20px" }}>售后数据</div>
-                            <div className='children--1L3A0'>
-                                <div className='cp-date-picker-v2'>
-                                    <div className="cp-date-picker-v2-title">统计日期: </div>
-                                    <div className="cp-date-picker-v2-time">{dateSection}</div>
-                                    <div className="cp-picker-tab" tabindex="1">
-                                        <div className="ecom-radio-group ecom-radio-group-outline">
-                                            {
-                                                tabList.map((item, index) => {
-                                                    return (
-                                                        <label className={`ecom-radio-button-wrapper ${tabIndex === index && "ecom-radio-button-wrapper-checked"}`} key={index} onClick={() => this.handleClick(index)}>
-                                                            <span className={`ecom-radio-button ${tabIndex === index && "ecom-radio-button-checked"}`}>
-                                                                <input type="radio" className="ecom-radio-button-input" value="21" />
-                                                                <span className="ecom-radio-button-inner"></span></span><span>{item.title}</span>
-                                                        </label>
-                                                    )
-                                                })
-                                            }
+                            <div className="title--2ZSyt" style={{ fontSize: "16px", lineHeight: "22px" }}>售后分析</div>
+                            <div className="children--1L3A0">
+                                <a href=" https://school.jinritemai.com/doudian/web/article/113351" target="_blank" rel="noopener noreferrer">帮助中心</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div className='wrapper--3K0rj'>
+                                <div className="title--2ZSyt" style={{ fontSize: "14px", lineHeight: "20px" }}>售后数据</div>
+                                <div className='children--1L3A0'>
+                                    <div className='cp-date-picker-v2'>
+                                        <div className="cp-date-picker-v2-title">统计日期: </div>
+                                        <div className="cp-date-picker-v2-time">{dateSection}</div>
+                                        <div className="cp-picker-tab" tabindex="1">
+                                            <div className="ecom-radio-group ecom-radio-group-outline">
+                                                {
+                                                    tabList.map((item, index) => {
+                                                        return (
+                                                            <label className={`ecom-radio-button-wrapper ${tabIndex === index && "ecom-radio-button-wrapper-checked"}`} key={index} onClick={() => this.handleClick(index)}>
+                                                                <span className={`ecom-radio-button ${tabIndex === index && "ecom-radio-button-checked"}`}>
+                                                                    <input type="radio" className="ecom-radio-button-input" value="21" />
+                                                                    <span className="ecom-radio-button-inner"></span></span><span>{item.title}</span>
+                                                            </label>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                            <div className="cp-picker-tab-pop-container"></div>
                                         </div>
-                                        <div className="cp-picker-tab-pop-container"></div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className='ecom-spin-nested-loading'>
-                            <div className='ecom-spin-container'>
-                                <div className='container--2_dmp'>
-                                    <div className="title--245O4">品质退货率</div>
-                                    <div className='content--mupQG'>
-                                        <div className='ecom-spin-nested-loading'>
-                                            <div className='ecom-spin-container'>
-                                                <div className='chart--3wSwG'>
+                            <div className='ecom-spin-nested-loading'>
+                                <div className='ecom-spin-container'>
+                                    <div className='container--2_dmp'>
+                                        <div className="title--245O4">品质退货率</div>
+                                        <div className='content--mupQG'>
+                                            <div className='ecom-spin-nested-loading'>
+                                                <div className='ecom-spin-container'>
+                                                    <div className='chart--3wSwG'>
+                                                        <div>
+                                                            <div style={{ position: "relative" }}>
+                                                                <Line {...config} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='box--3R7sW'>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
                                                     <div>
-                                                        <div style={{ position: "relative" }}>
-                                                            <Line {...config} />
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">纠纷发起量</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ color: "rgba(25, 102, 255, 0.8)", fontSize: "14p" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">3.28%</div><div className="xFix--1FI9Y"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>95.2%</span>的商家</span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className='box--3R7sW'>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">纠纷发起量</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ color: "rgba(25, 102, 255, 0.8)", fontSize: "14p" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">3.28%</div><div className="xFix--1FI9Y"></div>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">纠纷商责率</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">1.89%</div><div className="xFix--1FI9Y" ></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>97%</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>95.2%</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">纠纷商责率</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">1.89%</div><div className="xFix--1FI9Y" ></div>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">投诉率</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">0.23%</div><div className="xFix--1FI9Y" ></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>97%</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>97%</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">投诉率</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">0.23%</div><div className="xFix--1FI9Y" ></div>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">退款自主完结时长</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">8小时</div><div className="xFix--1FI9Y" ></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>96%</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>97%</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">退款自主完结时长</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">8小时</div><div className="xFix--1FI9Y" ></div>
+                                                <div className='container--3iWyf containerActive--2Rp6p' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ" style={{ color: "rgba(25, 102, 255, 0.8)" }}>品质退货率</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined" style={{ color: "rgba(25, 102, 255, 0.8)" }}><div></div><div className="xFix--1FI9Y" style={{ color: "rgba(25, 102, 255, 0.8)" }}></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">0.19%</div><div className="xFix--1FI9Y" style={{ color: "rgba(25, 102, 255, 0.8)" }}></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y descriptionActive--10sZE">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y descriptionActive--10sZE">优于同行同规模<span style={{ fcolor: "rgb(25, 102, 255)", ontWeight: 500 }}>98%</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>96%</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf containerActive--2Rp6p' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ" style={{ color: "rgba(25, 102, 255, 0.8)" }}>品质退货率</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined" style={{ color: "rgba(25, 102, 255, 0.8)" }}><div></div><div className="xFix--1FI9Y" style={{ color: "rgba(25, 102, 255, 0.8)" }}></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">0.19%</div><div className="xFix--1FI9Y" style={{ color: "rgba(25, 102, 255, 0.8)" }}></div>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">退货退款自主完结时长</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">82小时</div><div className="xFix--1FI9Y" ></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>-</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y descriptionActive--10sZE">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y descriptionActive--10sZE">优于同行同规模<span style={{ fcolor: "rgb(25, 102, 255)", ontWeight: 500 }}>98%</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">退货退款自主完结时长</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">82小时</div><div className="xFix--1FI9Y" ></div>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">纠纷商责率</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">-</div><div className="xFix--1FI9Y" ></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>-</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>-</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">纠纷商责率</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">-</div><div className="xFix--1FI9Y" ></div>
+                                                <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
+                                                    <div>
+                                                        <div className='wrapper--dFnyT titleValueActive--3IasN'>
+                                                            <div className='titleWrapper--3Vyu7'>
+                                                                <div className="title--zjgkJ">结算率</div>
+                                                                <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
+                                                                    <QuestionCircleOutlined style={{ fontSize: "14px" }} />
+                                                                </span>
+                                                            </div>
+                                                            <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
+                                                                <div className="value--2fI2l">20%</div><div className="xFix--1FI9Y" ></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
+                                                    <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>98.7</span>的商家</span>
                                                 </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>-</span>的商家</span>
-                                            </div>
-                                            <div className='container--3iWyf' style={{ marginBottom: "8px", marginLeft: "8px", cursor: "pointer" }}>
-                                                <div>
-                                                    <div className='wrapper--dFnyT titleValueActive--3IasN'>
-                                                        <div className='titleWrapper--3Vyu7'>
-                                                            <div className="title--zjgkJ">结算率</div>
-                                                            <span className='ecom-sp-icon sp-icon-parcel questionIcon--nu9_5'>
-                                                                <QuestionCircleOutlined style={{ fontSize: "14px" }} />
-                                                            </span>
-                                                        </div>
-                                                        <div className="valueWrapper--3jbBR" title="-undefined"><div></div><div className="xFix--1FI9Y"></div><div className="preUnit--3JKte"></div>
-                                                            <div className="value--2fI2l">20%</div><div className="xFix--1FI9Y" ></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <span className="description--1tq-Y">较前30日&nbsp;<div className="cp-change-ratio"><div className="cp-change-ratio-value cp-change-ratio-value-" style={{ fontWeight: 500 }}></div><span className="cp-change-ratio-icon"></span></div></span>
-                                                <span className="description--1tq-Y">优于同行同规模<span style={{ fontWeight: 500 }}>98.7</span>的商家</span>
                                             </div>
                                         </div>
                                     </div>
@@ -257,7 +265,8 @@ export class Shfx extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div className="footerWrapper--2JxYD"><div className="links--1uhwH"><div className="label--3dQHK">关联平台</div><a href="https://www.bytedance.com/zh/" target="__blank" rel="noreferrer noopener">字节跳动</a><div className="fDivider--1ZsWP"></div><a href="https://www.douyin.com/" target="__blank" rel="noreferrer noopener">抖音短视频</a><div className="fDivider--1ZsWP"></div><a href="https://www.toutiao.com/" target="__blank" rel="noreferrer noopener">今日头条</a><div className="fDivider--1ZsWP"></div><a href="https://www.ixigua.com/" target="__blank" rel="noreferrer noopener">西瓜视频</a><div className="fDivider--1ZsWP"></div><a href="https://www.huoshanzhibo.com/" target="__blank" rel="noreferrer noopener">抖音火山版</a><div className="fDivider--1ZsWP"></div><a href="https://www.oceanengine.com/" target="__blank" rel="noreferrer noopener">巨量引擎</a><div className="fDivider--1ZsWP"></div><a href="https://douyinec.com/" target="__blank" rel="noreferrer noopener">抖音电商</a><div className="fDivider--1ZsWP"></div><a href="https://fxg.jinritemai.com/login" target="__blank" rel="noreferrer noopener">抖店</a></div><div className="icp--u0o1U"><div>京ICP证B2-20180202</div><div>营业执照</div><div>协议声明</div><div>Copyright© 2020北京空间变换科技有限公司All rights Reserved.</div></div></div>
+                </Spin>
             </div>
         )
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import "./loginTab.less";
 let waitTime = 60
 export class loginTab extends Component {
@@ -17,6 +18,10 @@ export class loginTab extends Component {
     }
     handleCapture = () => {
         this.countDown()
+    }
+    handleLogin = () =>{
+        console.log(this.props)
+        this.props.history.push("/homepage")
     }
     countDown = () => {
         if (waitTime > 0) {
@@ -120,7 +125,7 @@ export class loginTab extends Component {
                                                     </div>
                                                 </div>
                                                 <div className='account-center-submit'>
-                                                    <button className="account-center-action-button" style={{ background: "rgb(25, 102, 255)" }}>登录</button>
+                                                    <button className="account-center-action-button" style={{ background: "rgb(25, 102, 255)" }} onClick={this.handleLogin}>登录</button>
                                                 </div>
                                             </>
                                     }
@@ -154,4 +159,4 @@ export class loginTab extends Component {
     }
 }
 
-export default loginTab
+export default withRouter(loginTab)

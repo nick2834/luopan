@@ -299,7 +299,7 @@ export const data_head = [
                 "index_display": "成交金额",
                 "index_name": "pay_amt",
                 "value": {
-                    "value": 389372190,
+                    "value": 1567002,
                     "unit": "price"
                 },
                 "change_value": {
@@ -322,7 +322,7 @@ export const data_head = [
                 "index_display": "千次观看成交金额",
                 "index_name": "gpm",
                 "value": {
-                    "value": 0,
+                    "value": 1567002,
                     "unit": "price"
                 },
                 "change_value": {
@@ -333,7 +333,7 @@ export const data_head = [
                 "index_display": "退款金额",
                 "index_name": "refund_amt",
                 "value": {
-                    "value": 0,
+                    "value": 76980,
                     "unit": "price"
                 },
                 "change_value": {

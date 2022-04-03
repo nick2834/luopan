@@ -15,7 +15,7 @@ const creatHistory = require("history").createHashHistory;
 const history = creatHistory();
 export class App extends Component {
   componentDidMount = () => {
-    console.log(this.state)
+    console.log(this.props)
   }
   render() {
     return (
@@ -23,8 +23,9 @@ export class App extends Component {
         <div className="App">
           <Switch>
             <Route path='/login' component={Login}></Route>
-            <Route path='/homepage' component={Homepage}></Route>
-            <Route path='/qualification' component={Qualification}></Route>
+            <Redirect from="/" exact to="login"></Redirect>
+            <Route path='/homepage' exact component={Homepage} onEnter={() => document.title = "首页"}></Route>
+            <Route path='/qualification' exact component={Qualification} onEnter={() => document.title = "资质中心"}></Route>
             <div className='compass--QcMj1'>
               <div className="headerWrapper--7HYa6">
                 <div className='headerContainer--1j3-v'>
@@ -51,16 +52,12 @@ export class App extends Component {
               </div>
               <div className='compassWrapper--19hSB'>
                 <Navbar />
-                <Route path='/login' component={Login}></Route>
-                <Route path='/shop' component={Basic}></Route>
-                <Route path='/product-analysis' component={Shops}></Route>
-                <Route path='/tyf' component={tyf}></Route>
-                <Route path='/shfx' component={Shfx}></Route>
-                <Route path='/live-list' component={liveList}></Route>
+                <Route path='/shop' exact component={Basic}></Route>
+                <Route path='/product-analysis' exact component={Shops}></Route>
+                <Route path='/tyf' exact component={tyf}></Route>
+                <Route path='/shfx' exact component={Shfx}></Route>
+                <Route path='/live-list' exact component={liveList}></Route>
               </div>
-              <Redirect from="/*" to="/login"></Redirect>
-
-
               <Feedback />
             </div>
           </Switch>

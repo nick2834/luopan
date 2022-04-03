@@ -16,7 +16,7 @@ export class Navbar extends Component {
         const { location: { pathname } } = this.props.history;
         let selected = 0;
         switch (pathname) {
-            case "/":
+            case "/shop":
                 selected = 0;
                 break;
             case "/product-analysis":
@@ -37,7 +37,7 @@ export class Navbar extends Component {
             <div className='navWrapper--2Mgu6'>
                 <div className='innerNav--3T4Eh tooltipBox'>
                     <div className='navBar--2DM6X'>
-                        <div className={`block--2RTOs ${selected === 0 && 'selected--1uPEI'}`} onClick={() => this.hanleSelect(0, "/")}>
+                        <div className={`block--2RTOs ${selected === 0 && 'selected--1uPEI'}`} onClick={() => this.hanleSelect(0, "/shop")}>
                             <div data-id="20100" className={`rootMenu--2LfA8 ${selected === 0 && 'selected--1uPEI'}`}>
                                 <img src={`https://p1-ecda.byteimg.com/tos-cn-i-n15nrygpm8/${selected === 0 ? '080915ecc2344743887793f2d45f54ea' : '759b0bea1b6e403d9fdf22bec7d951d6'}~tplv-n15nrygpm8-image.image`} alt='' />
                                 <div className="rootTitle--3Tmh_">首页</div>

@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import "./login.less";
 import LoginTab from "../components/loginTab";
 export class Login extends Component {
+    componentDidMount = () =>{
+        document.title = "登录"
+    }
     render() {
         return (
             <div className='index_loginPage__3vJM6'>
